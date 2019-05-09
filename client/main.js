@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueMeteorTracker from 'vue-meteor-tracker';   // here!
 Vue.use(VueMeteorTracker);                           // here!
+import { Meteor } from 'meteor/meteor';
 
 import App from './App.vue';
 import './main.html';
