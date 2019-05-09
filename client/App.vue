@@ -1,22 +1,70 @@
 <template>
   <div>
-    <p>This is a Vue component and below is the current date:<br />{{date}}</p>
+    <div v-if="!$subReady.time">Loading...</div>
+    <div v-else>
+      <p>Hello {{hello}},
+        <br>The time is now: {{currentTime}}
+      </p>
+      <button @click="updateTime">Update Time</button>
+      <p>Startup times:</p>
+      <ul>
+        <li v-for="t in TimeCursor">
+          {{t.time}}  -  {{t._id}}
+        </li>
+      </ul>
+      <p>Meteor settings</p>
+      <pre><code>
+        {{settings}}
+      </code></pre>
+    </div>
   </div>
 </template>
+
+<script>
+import { Time } from '../imports/api/time.js';
+import { Meteor } from 'meteor/meteor';
+
+export default {
+  data() {
+    console.log('Sending non-Meteor data to Vue component');
+    return {
+      hello: 'World',
+      settings: Meteor.settings.public,   // not Meteor reactive
+    }
+  },
+  // Vue Methods
+  methods: {  
+    updateTime() {
+      console.log('Calling Meteor Method UpdateTime');
+      Meteor.call('time.update');          // not Meteor reactive
+    }
+  },
+  // Meteor reactivity
+  meteor: {
+    // Subscriptions - Errors not reported spelling and capitalization.
+    $subscribe: {
+      'time': []
+    },
+    // A helper function to get the current time
+    currentTime () {
+      console.log('Calculating currentTime: ');
+      var t = Time.findOne('currentTime') || {};
+      return t.time;
+    },
+    // A Minimongo cursor on the Time collection is added to the Vue instance
+    TimeCursor () {
+      // Here you can use Meteor reactive sources like cursors or reactive vars
+      // as you would in a Blaze template helper
+      return Time.find({}, {
+        sort: {time: -1}
+      })
+    },
+  }
+}
+</script>
 
 <style scoped>
   p {
     font-size: 2em;
-    text-align: center;
   }
 </style>
-
-<script>
-export default {
-  data() {
-    return {
-      date: new Date(),
-    };
-  }
-}
-</script>
