@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
 import { Time } from '../imports/api/time.js';
+import { Tasks } from '../imports/api/tasks.js';
 
 Meteor.startup(() => {
     // Update the current time

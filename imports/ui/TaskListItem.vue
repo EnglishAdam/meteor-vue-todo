@@ -13,8 +13,11 @@
 
 <script>
 import { Meteor } from 'meteor/meteor';
+import { Tasks } from '../api/tasks.js';
 
 export default {
+  name: 'TaskListItem',
+
   props: [
     'task'
   ],

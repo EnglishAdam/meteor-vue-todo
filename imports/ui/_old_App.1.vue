@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="!$subReady.time">Loading...</div>
+    <!-- <div v-if="!$subReady.time">Loading...</div>
     <div v-else>
       <p>Hello {{hello}},
         <br>The time is now: {{currentTime}}
@@ -16,7 +16,7 @@
       <pre><code>
         {{settings}}
       </code></pre>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -25,6 +25,8 @@ import { Time } from '../imports/api/time.js';
 import { Meteor } from 'meteor/meteor';
 
 export default {
+  name: '_old_App.1',
+
   data() {
     console.log('Sending non-Meteor data to Vue component');
     return {
